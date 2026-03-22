@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>NextGenLMS — Student</title>
+<link rel="stylesheet" href="css/vars.css"/>
+<link rel="stylesheet" href="css/components.css"/>
+<link rel="stylesheet" href="css/layout.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body data-page="student">
+
+<div id="toast-wrap"></div>
+<div class="confirm-overlay" id="conf-overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon-ring danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    <div class="confirm-title" id="conf-title">Confirm</div>
+    <div class="confirm-msg" id="conf-msg">Are you sure?</div>
+    <div class="confirm-actions">
+      <button class="btn btn-ghost" id="conf-cancel">Cancel</button>
+      <button class="btn btn-danger" id="conf-ok">Confirm</button>
+    </div>
+  </div>
+</div>
+<div id="modals-root"></div>
+<div id="sb-overlay" class="sb-overlay" onclick="closeSidebar()"></div>
+
+<div class="app-shell">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="s-sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div>
+        <div class="logo-text">Next<span>Gen</span>LMS</div>
+        <div class="logo-sub">Student Portal</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Main</div>
+      <a class="nav-link active" onclick="sNav('dashboard',this)"><i class="fa-solid fa-house"></i> Dashboard</a>
+      <a class="nav-link" onclick="sNav('courses',this)"><i class="fa-solid fa-book-open"></i> My Courses</a>
+      <a class="nav-link" onclick="sNav('join',this)"><i class="fa-solid fa-circle-plus"></i> Join Course</a>
+      <div class="nav-section">Learning</div>
+      <a class="nav-link" onclick="sNav('progress',this)"><i class="fa-solid fa-chart-line"></i> My Progress</a>
+      <a class="nav-link" onclick="sNav('quizzes',this)"><i class="fa-solid fa-clipboard-list"></i> Quizzes</a>
+      <div class="nav-section">Account</div>
+      <a class="nav-link" onclick="sNav('settings',this)"><i class="fa-solid fa-gear"></i> Settings</a>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="user-card" onclick="logout()">
+        <div class="avatar av-40 av-p" id="s-avatar-text">S</div>
+        <div class="user-info">
+          <div class="user-name" id="s-user-name">Student</div>
+          <div class="user-role" id="s-user-role">Student</div>
+        </div>
+        <i class="fa-solid fa-right-from-bracket user-logout"></i>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-wrap">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" onclick="openSidebar('s-sidebar')"><i class="fa-solid fa-bars"></i></button>
+        <span class="page-title" id="s-page-title">Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-btn" onclick="toggleTheme()" title="Toggle theme">
+          <i class="fa-solid fa-moon" data-theme-icon></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-body" id="s-content">
+      <div class="page-load"><div class="spin spin-lg"></div><p>Loading...</p></div>
+    </div>
+
+    <footer class="app-footer">
+      © <span class="auto-year"></span> NextGenIT. All rights reserved. Developed by :
+      <a href="https://lakshan.vercel.app/" target="_blank">Lakshan Vidanapathirana</a>
+    </footer>
+  </div>
+</div>
+
+<script src="js/core.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/student.js"></script>
+</body>
+</html>

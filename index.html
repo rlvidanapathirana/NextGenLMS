@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>NextGenLMS — Sign In</title>
+<link rel="stylesheet" href="css/vars.css"/>
+<link rel="stylesheet" href="css/components.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+.auth-root{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden;background:var(--bg)}
+.bg-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bg-orb{position:absolute;border-radius:50%;filter:blur(70px)}
+.bg-orb.o1{width:620px;height:620px;background:radial-gradient(circle,var(--p) 0%,transparent 65%);top:-200px;right:-150px;animation:orbF 22s ease-in-out infinite}
+.bg-orb.o2{width:460px;height:460px;background:radial-gradient(circle,#a78bfa 0%,transparent 65%);bottom:-140px;left:-80px;animation:orbF 28s ease-in-out infinite reverse;animation-delay:-10s}
+.bg-orb.o3{width:320px;height:320px;background:radial-gradient(circle,var(--acc) 0%,transparent 65%);top:45%;left:35%;animation:orbF 18s ease-in-out infinite;animation-delay:-6s;opacity:.25}
+@keyframes orbF{0%{transform:translate(0,0) scale(1);opacity:.38}33%{transform:translate(28px,-18px) scale(1.06);opacity:.45}66%{transform:translate(-18px,14px) scale(.94);opacity:.3}100%{transform:translate(0,0) scale(1);opacity:.38}}
+.bg-grid{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--b1) 1px,transparent 1px),linear-gradient(90deg,var(--b1) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%)}
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;border-radius:50%;background:var(--p);opacity:0;animation:pRise linear infinite}
+@keyframes pRise{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.5}90%{opacity:.15}100%{transform:translateY(-10vh) scale(1.2);opacity:0}}
+.auth-container{position:relative;z-index:1;display:flex;width:100%;max-width:980px;min-height:620px;border-radius:var(--r-xl);box-shadow:var(--sh-xl),0 0 0 1px var(--b1);overflow:hidden;animation:cIn .6s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes cIn{from{opacity:0;transform:scale(.93) translateY(22px)}to{opacity:1;transform:none}}
+/* LEFT */
+.auth-left{flex:1;background:linear-gradient(145deg,#5b52f0 0%,#7c3aed 55%,#a855f7 100%);padding:52px 44px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.auth-left::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 80%,rgba(255,255,255,.07) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(255,255,255,.05) 0%,transparent 50%)}
+.auth-left::after{content:'';position:absolute;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.06);bottom:-160px;right:-100px}
+.al-top{position:relative;z-index:1}
+.al-logo{display:flex;align-items:center;gap:13px;margin-bottom:46px}
+.al-logo-ico{width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.18);backdrop-filter:blur(10px);border:1.5px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.15)}
+.al-logo-txt{font-size:1.45rem;font-weight:900;color:#fff;letter-spacing:-.01em}
+.al-logo-txt span{opacity:.7}
+.al-h1{font-size:2.3rem;font-weight:900;color:#fff;line-height:1.15;margin-bottom:14px;letter-spacing:-.025em}
+.al-h1 em{font-style:normal;opacity:.7}
+.al-p{font-size:.875rem;color:rgba(255,255,255,.75);line-height:1.75;margin-bottom:34px}
+.al-feats{display:flex;flex-direction:column;gap:12px}
+.al-feat{display:flex;align-items:center;gap:13px;padding:13px 16px;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-sm);animation:featSlide .5s cubic-bezier(.4,0,.2,1) both}
+.al-feat:nth-child(1){animation-delay:.18s}
+.al-feat:nth-child(2){animation-delay:.3s}
+.al-feat:nth-child(3){animation-delay:.42s}
+@keyframes featSlide{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+.al-feat-ico{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:.88rem;color:#fff;flex-shrink:0}
+.al-feat-txt{font-size:.83rem;font-weight:600;color:rgba(255,255,255,.88)}
+.al-feat-txt span{display:block;font-weight:400;opacity:.65;font-size:.76rem;margin-top:1px}
+.al-bot{position:relative;z-index:1;font-size:.73rem;color:rgba(255,255,255,.45)}
+.al-bot a{color:rgba(255,255,255,.65);font-weight:700}
+/* RIGHT */
+.auth-right{width:440px;flex-shrink:0;background:var(--surface);display:flex;flex-direction:column;justify-content:center;padding:44px 40px;overflow-y:auto;position:relative}
+.theme-corner{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:var(--r-sm);background:var(--surface2);border:1.5px solid var(--b1);color:var(--tx2);cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all var(--t);z-index:10}
+.theme-corner:hover{background:var(--surface3);color:var(--p)}
+/* Form head */
+.fh{margin-bottom:26px}
+.fh h2{font-size:1.5rem;font-weight:900;color:var(--tx);margin-bottom:5px;letter-spacing:-.02em}
+.fh p{font-size:.85rem;color:var(--tx2);line-height:1.5}
+/* Role switcher */
+.role-sw{display:flex;background:var(--surface2);border:1.5px solid var(--b1);border-radius:var(--r-sm);padding:4px;gap:4px;margin-bottom:22px}
+.role-btn{flex:1;padding:9px 10px;border:none;background:transparent;color:var(--tx2);font-family:var(--ff-body);font-size:.8rem;font-weight:700;cursor:pointer;border-radius:var(--r-xs);transition:all var(--t);display:flex;align-items:center;justify-content:center;gap:6px}
+.role-btn.active{background:var(--surface);color:var(--p);box-shadow:var(--sh-sm)}
+/* Auth form */
+.af{display:flex;flex-direction:column;gap:15px}
+/* Submit */
+.af-submit{width:100%;padding:13px 20px;font-size:.9rem;font-weight:800;border:none;border-radius:var(--r-sm);cursor:pointer;background:linear-gradient(135deg,var(--p),#8b5cf6);color:#fff;box-shadow:0 6px 24px var(--p-glow);transition:all var(--t);display:flex;align-items:center;justify-content:center;gap:9px;position:relative;overflow:hidden;letter-spacing:.01em;margin-top:4px}
+.af-submit::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-100%);transition:transform .55s}
+.af-submit:hover::before{transform:translateX(100%)}
+.af-submit:hover{box-shadow:0 10px 36px var(--p-glow);transform:translateY(-1px)}
+.af-submit:active{transform:scale(.98)}
+.af-submit:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+/* Divider */
+.af-div{display:flex;align-items:center;gap:12px;font-size:.74rem;color:var(--tx3);font-weight:600;margin:4px 0}
+.af-div::before,.af-div::after{content:'';flex:1;height:1px;background:var(--b1)}
+/* Switch */
+.af-sw{text-align:center;font-size:.81rem;color:var(--tx2);margin-top:16px}
+.af-sw a{color:var(--p);font-weight:700;cursor:pointer;transition:opacity var(--t)}
+.af-sw a:hover{opacity:.75;text-decoration:underline}
+/* Info banner */
+.info-ban{background:rgba(255,201,60,.07);border:1px solid rgba(255,201,60,.22);border-radius:var(--r-sm);padding:12px 14px;font-size:.81rem;color:var(--tx2);line-height:1.55;display:flex;gap:9px;align-items:flex-start;margin-bottom:14px}
+.info-ban i{color:var(--warning);flex-shrink:0;margin-top:1px}
+/* View hide */
+[data-view].hidden{display:none!important}
+/* Mobile */
+@media(max-width:820px){.auth-left{display:none}.auth-right{width:100%;padding:36px 28px;border-radius:0;min-height:100vh;justify-content:flex-start;padding-top:64px}.auth-container{border-radius:0;min-height:100vh;box-shadow:none}.auth-root{padding:0}}
+@media(max-width:420px){.auth-right{padding:28px 18px;padding-top:54px}}
+</style>
+</head>
+<body data-page="auth">
+<div id="toast-wrap"></div>
+<div class="confirm-overlay" id="conf-overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon-ring danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    <div class="confirm-title" id="conf-title">Confirm</div>
+    <div class="confirm-msg" id="conf-msg">Are you sure?</div>
+    <div class="confirm-actions">
+      <button class="btn btn-ghost" id="conf-cancel">Cancel</button>
+      <button class="btn btn-danger" id="conf-ok">Confirm</button>
+    </div>
+  </div>
+</div>
+<div id="modals-root"></div>
+<div id="sb-overlay" class="sb-overlay" onclick="closeSidebar()"></div>
+
+<div class="bg-canvas">
+  <div class="bg-orb o1"></div>
+  <div class="bg-orb o2"></div>
+  <div class="bg-orb o3"></div>
+</div>
+<div class="bg-grid"></div>
+<div class="particles" id="particles"></div>
+
+<div class="auth-root">
+  <div class="auth-container">
+
+    <!-- LEFT BRANDING -->
+    <div class="auth-left">
+      <div class="al-top">
+        <div class="al-logo">
+          <div class="al-logo-ico"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div class="al-logo-txt">Next<span>Gen</span>LMS</div>
+        </div>
+        <div class="al-h1">Learn Without <em>Limits.</em></div>
+        <div class="al-p">A modern, secure learning management system. Access courses, track progress, and grow — from anywhere.</div>
+        <div class="al-feats">
+          <div class="al-feat">
+            <div class="al-feat-ico"><i class="fa-solid fa-id-card"></i></div>
+            <div class="al-feat-txt">NIC / Passport Login<span>Students need no email to register</span></div>
+          </div>
+          <div class="al-feat">
+            <div class="al-feat-ico"><i class="fa-solid fa-key"></i></div>
+            <div class="al-feat-txt">PIN-Based Course Access<span>Join any course with a unique PIN</span></div>
+          </div>
+          <div class="al-feat">
+            <div class="al-feat-ico"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="al-feat-txt">Role-Based Security<span>Students · Lecturers · Super Admin</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="al-bot">
+        © <span class="auto-year"></span> NextGenIT &nbsp;·&nbsp; Developed by
+        <a href="https://lakshan.vercel.app/" target="_blank">Lakshan Vidanapathirana</a>
+      </div>
+    </div>
+
+    <!-- RIGHT FORM -->
+    <div class="auth-right">
+      <button class="theme-corner" onclick="toggleTheme()" title="Toggle theme">
+        <i class="fa-solid fa-moon" data-theme-icon></i>
+      </button>
+
+      <!-- ══ LOGIN ══ -->
+      <div data-view="login">
+        <div class="fh">
+          <h2 id="form-title">Welcome Back</h2>
+          <p id="form-sub">Sign in to your NextGenLMS account.</p>
+        </div>
+        <div class="role-sw">
+          <button class="role-btn active" onclick="setLoginRole('student',this)">
+            <i class="fa-solid fa-user-graduate"></i> Student
+          </button>
+          <button class="role-btn" onclick="setLoginRole('admin',this)">
+            <i class="fa-solid fa-chalkboard-user"></i> Lecturer / Admin
+          </button>
+        </div>
+        <div class="af">
+          <div class="field">
+            <label>NIC / Passport / Username</label>
+            <div class="input-wrap">
+              <i class="iico fa-solid fa-id-card"></i>
+              <input class="input" id="l-id" type="text" placeholder="NIC / Passport number" autocomplete="username"/>
+            </div>
+          </div>
+          <div class="field">
+            <label>PIN / Password</label>
+            <div class="input-wrap">
+              <i class="iico fa-solid fa-lock"></i>
+              <input class="input" id="l-pw" type="password" placeholder="Your PIN" autocomplete="current-password"/>
+              <i class="fa-solid fa-eye input-suffix" onclick="togglePw('l-pw',this)"></i>
+            </div>
+          </div>
+          <button class="af-submit" id="login-btn" onclick="doLogin()">
+            <i class="fa-solid fa-right-to-bracket"></i> Sign In
+          </button>
+        </div>
+        <div class="af-div">or</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button class="btn btn-ghost btn-full" onclick="showView('reg-student')">
+            <i class="fa-solid fa-user-plus"></i> Create Student Account
+          </button>
+          <button class="btn btn-glass btn-full" onclick="showView('reg-lecturer')">
+            <i class="fa-solid fa-chalkboard"></i> Apply as Lecturer
+          </button>
+        </div>
+        <div style="text-align:center;margin-top:20px;font-size:.72rem;color:var(--tx3)">
+          © <span class="auto-year"></span> NextGenIT &nbsp;·&nbsp;
+          <a href="https://lakshan.vercel.app/" target="_blank" style="color:var(--p);font-weight:700">Lakshan Vidanapathirana</a>
+        </div>
+      </div>
+
+      <!-- ══ STUDENT REGISTER ══ -->
+      <div data-view="reg-student" class="hidden">
+        <div class="fh"><h2>Create Account</h2><p>Register with your NIC or Passport number.</p></div>
+        <div class="af">
+          <div class="field">
+            <label>Full Name *</label>
+            <div class="input-wrap"><i class="iico fa-solid fa-user"></i>
+              <input class="input" id="sr-name" type="text" placeholder="e.g. Kavindu Perera"/>
+            </div>
+          </div>
+          <div class="field">
+            <label>NIC or Passport Number *</label>
+            <div class="input-wrap"><i class="iico fa-solid fa-id-card"></i>
+              <input class="input" id="sr-nic" type="text" placeholder="e.g. 200012345678"/>
+            </div>
+            <span class="hint">This becomes your login ID</span>
+          </div>
+          <div class="field">
+            <label>Email <span style="font-weight:400;color:var(--tx3)">(optional)</span></label>
+            <div class="input-wrap"><i class="iico fa-solid fa-envelope"></i>
+              <input class="input" id="sr-email" type="email" placeholder="your@email.com"/>
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="field">
+              <label>Create PIN *</label>
+              <div class="input-wrap"><i class="iico fa-solid fa-key"></i>
+                <input class="input" id="sr-pin" type="password" placeholder="Min 4 chars"/>
+                <i class="fa-solid fa-eye input-suffix" onclick="togglePw('sr-pin',this)"></i>
+              </div>
+              <div class="pw-strength" id="sr-pw-strength">
+                <div class="pw-bar"></div><div class="pw-bar"></div>
+                <div class="pw-bar"></div><div class="pw-bar"></div>
+              </div>
+            </div>
+            <div class="field">
+              <label>Confirm PIN *</label>
+              <div class="input-wrap"><i class="iico fa-solid fa-key"></i>
+                <input class="input" id="sr-pin2" type="password" placeholder="Repeat"/>
+              </div>
+            </div>
+          </div>
+          <button class="af-submit" id="sreg-btn" onclick="doStudentRegister()">
+            <i class="fa-solid fa-user-plus"></i> Create Account
+          </button>
+        </div>
+        <div class="af-sw">Already have an account? <a onclick="showView('login')">Sign in</a></div>
+      </div>
+
+      <!-- ══ LECTURER REGISTER ══ -->
+      <div data-view="reg-lecturer" class="hidden">
+        <div class="fh"><h2>Apply as Lecturer</h2><p>Submit your application for Super Admin review.</p></div>
+        <div class="info-ban">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>After approval, a Super Admin will assign you an <strong>Admin ID</strong> to activate your account.</span>
+        </div>
+        <div class="af">
+          <div class="form-grid-2">
+            <div class="field"><label>Full Name *</label>
+              <div class="input-wrap"><i class="iico fa-solid fa-user"></i>
+                <input class="input" id="lr-name" type="text" placeholder="Dr. Jane Smith"/>
+              </div>
+            </div>
+            <div class="field"><label>Username *</label>
+              <div class="input-wrap"><i class="iico fa-solid fa-at"></i>
+                <input class="input" id="lr-user" type="text" placeholder="jsmith"/>
+              </div>
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="field"><label>Email</label>
+              <div class="input-wrap"><i class="iico fa-solid fa-envelope"></i>
+                <input class="input" id="lr-email" type="email" placeholder="lecturer@uni.edu"/>
+              </div>
+            </div>
+            <div class="field"><label>Department</label>
+              <div class="input-wrap"><i class="iico fa-solid fa-building"></i>
+                <input class="input" id="lr-dept" type="text" placeholder="CS / Maths..."/>
+              </div>
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="field"><label>Password *</label>
+              <div class="input-wrap"><i class="iico fa-solid fa-lock"></i>
+                <input class="input" id="lr-pw" type="password" placeholder="Min 6 chars"/>
+                <i class="fa-solid fa-eye input-suffix" onclick="togglePw('lr-pw',this)"></i>
+              </div>
+              <div class="pw-strength" id="lr-pw-strength">
+                <div class="pw-bar"></div><div class="pw-bar"></div>
+                <div class="pw-bar"></div><div class="pw-bar"></div>
+              </div>
+            </div>
+            <div class="field"><label>Confirm *</label>
+              <div class="input-wrap"><i class="iico fa-solid fa-lock"></i>
+                <input class="input" id="lr-pw2" type="password" placeholder="Repeat"/>
+              </div>
+            </div>
+          </div>
+          <button class="af-submit" id="lreg-btn" onclick="doLecturerRegister()">
+            <i class="fa-solid fa-paper-plane"></i> Submit Application
+          </button>
+        </div>
+        <div class="af-sw">Already approved? <a onclick="showView('login')">Sign in</a> &nbsp;·&nbsp; <a onclick="showView('reg-student')">Student register</a></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/core.js"></script>
+<script src="js/auth.js"></script>
+<script>
+// Animated particles
+(function(){
+  const c = document.getElementById('particles');
+  for(let i=0;i<20;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    const s=Math.random()*5+2;
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*14+10}s;animation-delay:${Math.random()*-20}s`;
+    c.appendChild(p);
+  }
+})();
+</script>
+</body>
+</html>

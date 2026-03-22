@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>NextGenLMS — Lecturer</title>
+<link rel="stylesheet" href="css/vars.css"/>
+<link rel="stylesheet" href="css/components.css"/>
+<link rel="stylesheet" href="css/layout.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body data-page="admin">
+
+<div id="toast-wrap"></div>
+<div class="confirm-overlay" id="conf-overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon-ring danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    <div class="confirm-title" id="conf-title">Confirm</div>
+    <div class="confirm-msg" id="conf-msg">Are you sure?</div>
+    <div class="confirm-actions">
+      <button class="btn btn-ghost" id="conf-cancel">Cancel</button>
+      <button class="btn btn-danger" id="conf-ok">Confirm</button>
+    </div>
+  </div>
+</div>
+<div id="modals-root"></div>
+<div id="sb-overlay" class="sb-overlay" onclick="closeSidebar()"></div>
+
+<div class="app-shell">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="a-sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div>
+        <div class="logo-text">Next<span>Gen</span>LMS</div>
+        <div class="logo-sub" id="a-sidebar-tag">Lecturer Portal</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Main</div>
+      <a class="nav-link active" onclick="aNav('dashboard',this)"><i class="fa-solid fa-house"></i> Dashboard</a>
+      <a class="nav-link" onclick="aNav('courses',this)"><i class="fa-solid fa-book-open"></i> My Courses</a>
+      <a class="nav-link" onclick="aNav('students',this)"><i class="fa-solid fa-users"></i> Students</a>
+      <div class="nav-section">Account</div>
+      <a class="nav-link" onclick="aNav('settings',this)"><i class="fa-solid fa-gear"></i> Settings</a>
+      <div id="sa-link-wrap"></div>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="user-card" onclick="logout()">
+        <div class="avatar av-40 av-o" id="a-avatar-text">A</div>
+        <div class="user-info">
+          <div class="user-name" id="a-user-name">Admin</div>
+          <div class="user-role" id="a-user-role">Lecturer</div>
+        </div>
+        <i class="fa-solid fa-right-from-bracket user-logout"></i>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-wrap">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" onclick="openSidebar('a-sidebar')"><i class="fa-solid fa-bars"></i></button>
+        <span class="page-title" id="a-page-title">Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-btn" onclick="toggleTheme()"><i class="fa-solid fa-moon" data-theme-icon></i></button>
+      </div>
+    </header>
+
+    <div class="content-body" id="a-content">
+      <div class="page-load"><div class="spin spin-lg"></div></div>
+    </div>
+
+    <footer class="app-footer">
+      © <span class="auto-year"></span> NextGenIT. All rights reserved. Developed by :
+      <a href="https://lakshan.vercel.app/" target="_blank">Lakshan Vidanapathirana</a>
+    </footer>
+  </div>
+</div>
+
+<script src="js/core.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
